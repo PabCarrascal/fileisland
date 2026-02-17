@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>File Island</title>
+    <link rel="icon" type="image/png" href="fileisland.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        :root { 
+            --gold: #c5a059; 
+            --dark-bg: #0a0b0d; 
+        }
+        body { 
+            margin: 0; 
+            background: var(--dark-bg); 
+            color: white; 
+            font-family: 'MedievalSharp', cursive; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+
+        header { 
+            width: 100%; 
+            padding: 15px 0; 
+            background: linear-gradient(to bottom, #2a251d 0%, #0a0b0d 100%); 
+            border-bottom: 2px solid var(--gold); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); }
+        h1 { margin: 0; font-family: 'Cinzel Decorative', serif; color: var(--gold); letter-spacing: 5px; font-size: 2rem; }
+
+        #container { 
+            position: relative; 
+            width: 90vw; 
+            max-width: 1100px; 
+            margin-top: 30px; 
+            border: 4px solid #1a1a1a; 
+            outline: 1px solid var(--gold);
+            background: #000;
+        }
+        .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
+        .vjs-tech { object-fit: contain !important; }
+
+        #status-box { 
+            position: absolute; bottom: 20px; left: 20px; 
+            background: rgba(0, 0, 0, 0.75); padding: 10px 20px; 
+            border-left: 4px solid var(--gold); color: var(--gold); 
+            z-index: 10; backdrop-filter: blur(4px);
+        }
+
+        .rdt-footer {
+            margin-top: auto;
+            padding: 3rem 0 2rem 0;
+            text-align: center;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            width: 100%;
+        }
+        .rdt-footer:hover {
+            opacity: 1;
+        }
+        .rdt-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        .rdt-logo {
+            height: 40px;
+            width: auto;
+            margin-bottom: 8px;
+        }
+        .rdt-text {
+            font-size: 0.85rem;
+            color: #888;
+            margin: 0;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="fileisland.png" alt="File Island Emblem" class="logo">
+        <h1>FILE ISLAND</h1>
+    </header>
+
+    <div id="container">
+        <video-js id="player" class="vjs-default-skin vjs-big-play-centered">
+            <source src="/live/live.m3u8" type="application/x-mpegURL">
+        </video-js>
+        <div id="status-box">
+            AHORA EMITIENDO: <span id="titulo-film" style="color: #eee; margin-left: 10px;">Cargando archivos...</span>
+        </div>
+    </div>
+
+    <footer class="rdt-footer">
+        <div class="flex justify-center"> 
+            <a href="https://rdtserver.com" target="_blank" class="rdt-link">
+                <img src="logo-icon.jpeg" alt="RDT Logo" class="rdt-logo">
+                <p class="rdt-text">&copy; 2026 Reconquista Dev Team.</p>
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        var player = videojs('player', { autoplay: 'muted', controls: false, fluid: true });
+        async function updateTitle() {
+            try {
+                const res = await fetch('/live/titulo.txt?t=' + Date.now());
+                if (res.ok) document.getElementById('titulo-film').innerText = await res.text();
+            } catch (e) {}
+        }
+        document.body.addEventListener('click', () => { player.muted(false); player.play(); }, { once: true });
+        setInterval(updateTitle, 10000);
+        updateTitle();
+    </script>
+</body>
+</html>
