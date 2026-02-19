@@ -2,105 +2,66 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>File Island</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Island Protocol</title>
     <link rel="icon" type="image/png" href="fileisland.png">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
         :root { 
-            --gold: #c5a059; 
-            --dark-bg: #0a0b0d; 
+            --digi-cyan: #00e1ff; 
+            --digi-orange: #ff9900; 
+            --bg-dark: #050a10; 
+            --bg-panel: rgba(10, 25, 40, 0.85); 
         }
         body { 
-            margin: 0; 
-            background: var(--dark-bg); 
-            color: white; 
-            font-family: 'MedievalSharp', cursive; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh;
+            margin: 0; background: var(--bg-dark);
+            background-image: linear-gradient(rgba(0, 225, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 225, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px; color: var(--digi-cyan); 
+            font-family: 'Share Tech Mono', monospace; 
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
 
         header { 
-            width: 100%; 
-            padding: 15px 0; 
-            background: linear-gradient(to bottom, #2a251d 0%, #0a0b0d 100%); 
-            border-bottom: 2px solid var(--gold); 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+            width: 100%; padding: 15px 0; 
+            background: linear-gradient(to bottom, rgba(0,30,60,0.9) 0%, rgba(5,10,16,0.9) 100%); 
+            border-bottom: 2px solid var(--digi-cyan); box-shadow: 0 0 15px rgba(0, 225, 255, 0.3); 
+            display: flex; justify-content: center; align-items: center; gap: 20px;
         }
-        .logo { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--gold); }
-        h1 { margin: 0; font-family: 'Cinzel Decorative', serif; color: var(--gold); letter-spacing: 5px; font-size: 2rem; }
+        .logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--digi-cyan); filter: drop-shadow(0 0 5px var(--digi-cyan)); }
+        h1 { margin: 0; font-family: 'Orbitron', sans-serif; color: var(--digi-cyan); letter-spacing: 3px; font-size: 1.8rem; text-transform: uppercase; text-shadow: 0 0 10px rgba(0, 225, 255, 0.5); }
 
-        #container { 
-            position: relative; 
-            width: 90vw; 
-            max-width: 1100px; 
-            margin-top: 30px; 
-            border: 4px solid #1a1a1a; 
-            outline: 1px solid var(--gold);
-            background: #000;
-        }
+        #container { position: relative; width: 90vw; max-width: 1100px; margin-top: 30px; border: 3px solid var(--digi-cyan); box-shadow: 0 0 20px rgba(0, 225, 255, 0.2), inset 0 0 20px rgba(0, 225, 255, 0.1); background: #000; cursor: pointer; }
         .video-js { width: 100% !important; height: auto !important; aspect-ratio: 16/9; }
-        .vjs-tech { object-fit: contain !important; }
+        .vjs-default-skin .vjs-big-play-button { background-color: rgba(0, 225, 255, 0.5) !important; border-color: var(--digi-cyan) !important; }
 
-        #status-box { 
-            position: absolute; bottom: 20px; left: 20px; 
-            background: rgba(0, 0, 0, 0.75); padding: 10px 20px; 
-            border-left: 4px solid var(--gold); color: var(--gold); 
-            z-index: 10; backdrop-filter: blur(4px);
-        }
+        #status-box { position: absolute; bottom: 20px; left: 20px; background: var(--bg-panel); padding: 10px 20px; border-left: 4px solid var(--digi-orange); color: var(--digi-orange); z-index: 10; backdrop-filter: blur(5px); border-top: 1px solid rgba(255, 153, 0, 0.3); border-bottom: 1px solid rgba(255, 153, 0, 0.3); border-right: 1px solid rgba(255, 153, 0, 0.3); box-shadow: 0 0 10px rgba(255, 153, 0, 0.2); }
 
-        .rdt-footer {
-            margin-top: auto;
-            padding: 3rem 0 2rem 0;
-            text-align: center;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-            width: 100%;
-        }
-        .rdt-footer:hover {
-            opacity: 1;
-        }
-        .rdt-link {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: fit-content;
-            margin: 0 auto;
-        }
-        .rdt-logo {
-            height: 40px;
-            width: auto;
-            margin-bottom: 8px;
-        }
-        .rdt-text {
-            font-size: 0.85rem;
-            color: #888;
-            margin: 0;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
+        .rdt-footer { margin-top: auto; padding: 3rem 0 2rem 0; text-align: center; opacity: 0.7; transition: opacity 0.3s ease; width: 100%; border-top: 1px solid rgba(0, 225, 255, 0.1); }
+        .rdt-footer:hover { opacity: 1; }
+        .rdt-link { text-decoration: none; color: var(--digi-cyan); display: flex; flex-direction: column; align-items: center; width: fit-content; margin: 0 auto; }
+        .rdt-logo { height: 35px; width: auto; margin-bottom: 10px; filter: grayscale(100%) brightness(150%) sepia(100%) hue-rotate(130deg) saturate(200%); transition: 0.3s; }
+        .rdt-link:hover .rdt-logo { filter: none; }
+        .rdt-text { font-size: 0.8rem; color: rgba(0, 225, 255, 0.7); margin: 0; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="fileisland.png" alt="File Island Emblem" class="logo">
-        <h1>FILE ISLAND</h1>
+        <img src="fileisland.png" alt="Digivice Status" class="logo">
+        <h1>FILE ISLAND PROTOCOL</h1>
     </header>
 
     <div id="container">
-        <video-js id="player" class="vjs-default-skin vjs-big-play-centered">
-            <source src="/live/live.m3u8" type="application/x-mpegURL">
-        </video-js>
+        <video-js id="player" class="vjs-default-skin vjs-big-play-centered"></video-js>
+        
         <div id="status-box">
-            AHORA EMITIENDO: <span id="titulo-film" style="color: #eee; margin-left: 10px;">Cargando archivos...</span>
+            <div style="margin-bottom: 5px;">
+                DATA STREAM: <span id="titulo-film" style="color: #fff; text-shadow: 0 0 5px white;">Connecting...</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--digi-cyan); opacity: 0.8; letter-spacing: 1px;">
+                NEXT: <span id="titulo-siguiente">Standby...</span>
+            </div>
         </div>
     </div>
 
@@ -108,22 +69,52 @@
         <div class="flex justify-center"> 
             <a href="https://rdtserver.com" target="_blank" class="rdt-link">
                 <img src="logo-icon.jpeg" alt="RDT Logo" class="rdt-logo">
-                <p class="rdt-text">&copy; 2026 Reconquista Dev Team.</p>
+                <p class="rdt-text">&copy; 2026 RECONQUISTA DEV TEAM</p>
             </a>
         </div>
     </footer>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
-        var player = videojs('player', { autoplay: 'muted', controls: false, fluid: true });
+        const AppConfig = {
+            streamUrl: '/live/live.m3u8',
+            metadataUrl: '/live/status.json',
+            metadataRefreshRate: 10000 
+        };
+
+        var player = videojs('player', { 
+            autoplay: 'muted', controls: false, fluid: true,
+            sources: [{ src: AppConfig.streamUrl, type: 'application/x-mpegURL' }]
+        });
+        
         async function updateTitle() {
             try {
-                const res = await fetch('/live/titulo.txt?t=' + Date.now());
-                if (res.ok) document.getElementById('titulo-film').innerText = await res.text();
-            } catch (e) {}
+                const res = await fetch(AppConfig.metadataUrl + '?t=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('titulo-film').innerText = data.actual;
+                    document.getElementById('titulo-siguiente').innerText = data.siguiente;
+                }
+            } catch (e) {
+                console.warn("Metadata sync pending...");
+            }
         }
-        document.body.addEventListener('click', () => { player.muted(false); player.play(); }, { once: true });
-        setInterval(updateTitle, 10000);
+
+        // Clic silencioso para activar el audio
+        document.body.addEventListener('click', () => { 
+            player.muted(false); 
+            player.play(); 
+        }, { once: true });
+
+        player.on('error', function() {
+            console.warn("Signal lost. Attempting reconnection protocols...");
+            setTimeout(() => {
+                player.src({ type: 'application/x-mpegURL', src: AppConfig.streamUrl });
+                player.play();
+            }, 5000);
+        });
+
+        setInterval(updateTitle, AppConfig.metadataRefreshRate);
         updateTitle();
     </script>
 </body>
